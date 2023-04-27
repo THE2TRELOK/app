@@ -2,23 +2,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import { List } from 'react-virtualized';
 import jsonData from './r.json';
 import './App.css';
+
 function VirtualScrollBar() {
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [data, setData] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [endIndex, setEndIndex] = useState(0);
     const ref = useRef(null);
-  
+
     useEffect(() => {
-      setData(jsonData.r); 
-      updateDimensions(); 
-      window.addEventListener('resize', updateDimensions); 
+      setData(jsonData["range"]);
+
+      updateDimensions();
+      window.addEventListener('resize', updateDimensions);
       return () => {
         window.removeEventListener('resize', updateDimensions);
       };
     }, []);
-  
+
     useEffect(() => {
+      if (!data) return;
+
       const { scrollTop, scrollHeight, clientHeight } = ref.current;
       const newStartIndex = Math.floor(scrollTop / windowHeight * data.length);
       const newEndIndex = Math.min(
@@ -28,11 +32,11 @@ function VirtualScrollBar() {
       setStartIndex(newStartIndex);
       setEndIndex(newEndIndex);
     }, [windowHeight, ref, data]);
-  
+
     function updateDimensions() {
       setWindowHeight(window.innerHeight);
     }
-  
+
     function renderRow({ index, key, style }) {
       const item = data[index];
       return (
@@ -42,14 +46,14 @@ function VirtualScrollBar() {
         </div>
       );
     }
-  
+
     return (
       <div style={{ height: '100vh', overflowY: 'scroll' }} ref={ref}>
-        {data.slice(startIndex, endIndex).map((item, index) => (
+        {data?.slice(startIndex, endIndex).map((item, index) => (
           <List
             height={windowHeight}
             itemCount={data.length}
-            itemSize={50} 
+            itemSize={50}
             key={item.id}
             itemData={item}
             itemKey={item.id}
@@ -59,13 +63,14 @@ function VirtualScrollBar() {
         ))}
       </div>
     );
-  }
+}
+
 function App() {
     return (
         <div style={{height: "500px", overflowY: "scroll"}}>
           <VirtualScrollBar />
         </div>
-      );
-    }
+    );
+}
  
 export default App;
