@@ -5,6 +5,7 @@
 }
 
 
+
 .ReactVirtualized__Grid__innerScrollContainer::-webkit-scrollbar-track {
   background-color: #f5f5f5;
 }
@@ -12,10 +13,8 @@
   background-color: #cfcfcf;
 }
 
-
 div{
-  width: 300px;
-  border: 15px solid green;
-  padding: 50px;
-  margin: 20px;
+  height: 50vh;
+  width: 50vh;
+  display: flex;
 }
