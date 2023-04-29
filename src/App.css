@@ -37,6 +37,29 @@
   }
 }
 
+.data-container {
+  width: 50vw;
+  height: 50vh;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.list {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  border: 2px solid black;
+  box-sizing: border-box;
+}
+
+.list-item {
+  display: flex;
+  justify-content: center;
+}
+
 
 
 .ReactVirtualized__Grid__innerScrollContainer::-webkit-scrollbar-track {
@@ -44,10 +67,4 @@
 }
 .ReactVirtualized__Grid__innerScrollContainer::-webkit-scrollbar-thumb {
   background-color: #cfcfcf;
-}
-
-div{
-  height: 50vh;
-  width: 50vh;
-  display: flex;
 }

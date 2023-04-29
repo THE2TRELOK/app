@@ -1,74 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { List } from 'react-virtualized';
+import VirtualScroll from "react-dynamic-virtual-scroll";
 import jsonData from './r.json';
 import './App.css';
 
-function VirtualScrollBar() {
-    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-    const [data, setData] = useState([]);
-    const [startIndex, setStartIndex] = useState(0);
-    const [endIndex, setEndIndex] = useState(0);
-    const ref = useRef(null);
+function App() {
+    const [data, setData] = useState(jsonData.range);
 
-    useEffect(() => {
-      setData(jsonData["range"]);
-
-      updateDimensions();
-      window.addEventListener('resize', updateDimensions);
-      return () => {
-        window.removeEventListener('resize', updateDimensions);
-      };
+    const renderItem = React.useCallback((rowIndex) => {
+        return (
+            <div
+                className="list-item"
+                style={{
+                    height: 40 + ((rowIndex * 3) % 10) * 5,
+                    background: rowIndex % 2 ? "lightgray" : "white"
+                }}
+            >
+                <h3>{data[rowIndex][0]}</h3>
+            </div>
+        );
     }, []);
 
-    useEffect(() => {
-      if (!data) return;
-
-      const { scrollTop, scrollHeight, clientHeight } = ref.current;
-      const newStartIndex = Math.floor(scrollTop / windowHeight * data.length);
-      const newEndIndex = Math.min(
-        newStartIndex + Math.ceil(clientHeight / windowHeight * data.length),
-        data.length
-      );
-      setStartIndex(newStartIndex);
-      setEndIndex(newEndIndex);
-    }, [windowHeight, ref, data]);
-
-    function updateDimensions() {
-      setWindowHeight(window.innerHeight);
-    }
-
-    function renderRow({ index, key, style }) {
-      const item = data[index];
-      return (
-        <div key={key} style={style}>
-          {item.name}
-          // Add other data fields here as needed
-        </div>
-      );
-    }
-
     return (
-      <div style={{ height: '100vh', overflowY: 'scroll' }} ref={ref}>
-        {data?.slice(startIndex, endIndex).map((item, index) => (
-          <List
-            height={windowHeight}
-            itemCount={data.length}
-            itemSize={50}
-            key={item.id}
-            itemData={item}
-            itemKey={item.id}
-            itemRenderer={renderRow}
-            width="100%"
-          />
-        ))}
-      </div>
-    );
-}
-
-function App() {
-    return (
-        <div style={{height: "500px", overflowY: "scroll"}}>
-          <VirtualScrollBar />
+        <div className={"data-container"}>
+            {data.length > 0 &&
+                <VirtualScroll
+                    className="list"
+                    minItemHeight={40}
+                    totalLength={data.length}
+                    renderItem={renderItem}
+                />
+            }
         </div>
     );
 }
