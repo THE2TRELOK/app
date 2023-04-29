@@ -12,8 +12,10 @@ function App() {
             <div
                 className="list-item"
                 style={{
-                    height: 40 + ((rowIndex * 3) % 10) * 5,
-                    background: rowIndex % 2 ? "lightgray" : "white"
+                    height: 40,
+                    background: rowIndex % 2 ? "lightgray" : "white",
+                    display: "flex",
+                    alignItems: "center"
                 }}
             >
                 <h3>{data[rowIndex][0]}</h3>
@@ -28,6 +30,7 @@ function App() {
                     className="list"
                     minItemHeight={40}
                     totalLength={data.length}
+                    length={40}
                     renderItem={renderItem}
                 />
             }
