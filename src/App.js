@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { List } from 'react-virtualized';
 import jsonData from './r.json';
 import './App.css';
-
+const data = require('./r.json');
 function VirtualScrollBar() {
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [data, setData] = useState([]);
@@ -64,12 +64,12 @@ function VirtualScrollBar() {
       </div>
     );
 }
-
+console.log(data.range);
 function App() {
     return (
-        <div style={{height: "500px", overflowY: "scroll"}}>
-          <VirtualScrollBar />
-        </div>
+    
+        <VirtualScrollBar />
+      
     );
 }
  
