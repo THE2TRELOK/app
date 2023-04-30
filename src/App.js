@@ -19,10 +19,10 @@ function App() {
                 }}
             >
                 <h3>{data[rowIndex][0]}</h3> 
-                <h3>{data[rowIndex][1]}</h3>
-                <h3>{data[rowIndex][2]}</h3>
+                <h3> | {data[rowIndex][1]} | </h3>
+                <h3> {data[rowIndex][2]} | </h3>
                 <h3>{data[rowIndex][3]}</h3>
-                <h3>{data[rowIndex][4]}</h3>
+                <h3> | {data[rowIndex][4]} |</h3>
                 
             </div>
         );
