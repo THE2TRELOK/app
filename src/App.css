@@ -60,7 +60,34 @@
   justify-content: center;
 }
 
+.card {
+  width: 1rem;
+  background-color: rgba(154, 148, 148, 0.64);
+  border-radius: 0.2rem;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 0.2rem;
+}
+
+.card.x {
+  background-color: #cc9090;
+  color: #4d1e1e;
+}
+.card.y {
+  background-color: #84c284;
+  color: #1c3f1c;
+}
+.card.z {
+  background-color: #839bc5;
+  color: #191941;
+}
+.card.w {
+  background-color: #626262;
+  color: white;
+}
 
 .ReactVirtualized__Grid__innerScrollContainer::-webkit-scrollbar-track {
   background-color: #f5f5f5;

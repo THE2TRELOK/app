@@ -17,33 +17,29 @@ function App() {
       justifyContent: "center",
     };
 
-    const elements = [];
+    //OPTION 1: old but working
 
-    for (let i = 1; i <= 4; i++) {
-      const text = data[rowIndex][0][i];
-      let backgroundColor = "transparent";
+    // const elements = [];
+    // for (let i = 0; i < data[rowIndex][0].length; i++) {
+    //   const card = data[rowIndex][0][i];
+    //
+    //   const rank = card[0];
+    //   const suit = card[1];
+    //
+    //   elements.push(
+    //     <h3 key={i} className={`card ${suit}`}>
+    //       {rank}
+    //     </h3>
+    //   );
+    // }
 
-      if (text.includes("x")) {
-        backgroundColor = "red";
-      } else if (text.includes("y")) {
-        backgroundColor = "green";
-      } else if (text.includes("z")) {
-        backgroundColor = "lightblue";
-      } else if (text.includes("w")) {
-        backgroundColor = "yellow";
-      }
 
-      const letterStyle = {
-        background: backgroundColor,
-        marginRight: i < 4 ? "10px" : 0,
-      };
-
-      elements.push(
-        <h3 key={i} style={letterStyle} className='push'>
-          {text}
-        </h3>
-      );
-    }
+    //OPTION 2: modern with array.map usage
+    const elements = data[rowIndex][0].map((card, index) => (
+      <h3 key={index} className={`card ${card[1]}`}>
+        {card[0]}
+      </h3>
+    ))
 
     return <div className="list-item" style={style}>{elements}</div>;
   }, [data]);
