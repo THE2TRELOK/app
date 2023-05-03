@@ -68,3 +68,9 @@
 .ReactVirtualized__Grid__innerScrollContainer::-webkit-scrollbar-thumb {
   background-color: #cfcfcf;
 }
+
+.push{
+  border-radius: 20%;
+  width: 25px;
+  height: 25px;
+}

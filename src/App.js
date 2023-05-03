@@ -35,10 +35,11 @@ function App() {
 
       const letterStyle = {
         background: backgroundColor,
+        marginRight: i < 4 ? "10px" : 0,
       };
 
       elements.push(
-        <h3 key={i} style={letterStyle}>
+        <h3 key={i} style={letterStyle} className='push'>
           {text}
         </h3>
       );
