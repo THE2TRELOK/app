@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { List } from 'react-virtualized';
 import VirtualScroll from "react-dynamic-virtual-scroll";
 import jsonData from './r.json';
 import './App.css';
@@ -8,29 +7,20 @@ function App() {
   const [filterA, setFilterA] = useState('');
   const [_data, _setData] = useState(jsonData.range);
 
-  const methodFilterA = ( data, count ) => {
-    let str = "";
 
-    if( count == 0 )
-      return true;
-      // ['A', 'A', 'Q', '7', '5'] -> AAQ75
-      data[0].map( i => { str += i[0] });
-//check
-    if( str.match(/\A/g) && str.match(/\A/g).length == count ) 
-      return true;
-
-    return false
+  const methodFilterA = ( data, filter ) => {
+    return filter
+      .split("")
+      .every(char => 
+        data[0]
+          .join("")
+          .includes(char)
+      );
   }
 
   const handleInputChange = (event) => {
-    let val = event.target.value;
-    
-    val = val.replace("a", "A");
-    let result = val.replace(/[^A]/g, "");
-
-    setFilterA(result);
-
-    _setData(jsonData.range.filter( i => methodFilterA(i, result.length) ))
+    setFilterA(event.target.value);
+    _setData(jsonData.range.filter( i => methodFilterA(i, event.target.value) ))
   };
 
   const renderItem = React.useCallback((rowIndex) => {
@@ -65,7 +55,7 @@ function App() {
           />
         )}
       </div>
-      <input type='text' value={filterA} maxLength={4} minLength={0} placeholder='Type number' onChange={handleInputChange}/>
+      <input type='text' value={filterA} maxLength={5} minLength={0} placeholder='Type number' onChange={handleInputChange}/>
     </div>
   );
 }
