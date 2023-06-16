@@ -8,20 +8,39 @@ function App() {
   const [_data, _setData] = useState(jsonData.range);
 
 
-  const methodFilterA = ( data, filter ) => {
-    return filter
-      .split("")
-      .every(char => 
-        data[0]
-          .join("")
-          .includes(char)
-      );
-  }
+  const methodFilterA = (data, filter) => {
+    const filters = filter.split(/[,:]/).map(f => f.trim());
+    return filters.some(f => {
+      if (f.startsWith("!")) {
+        const negateFilter = f.slice(1);
+        return !data[0].join("").includes(negateFilter);
+      } else {
+        return f
+          .split('')
+          .every(char =>
+            data[0]
+              .join('')
+              .includes(char)
+          );
+      }
+    });
+  };
+  
+  
+  
 
   const handleInputChange = (event) => {
-    setFilterA(event.target.value);
-    _setData(jsonData.range.filter( i => methodFilterA(i, event.target.value) ))
+    const inputValue = event.target.value;
+    setFilterA(inputValue);
+    
+    if (inputValue.includes(',')) {
+      const filters = inputValue.split(',');
+      _setData(jsonData.range.filter(i => filters.some(filter => methodFilterA(i, filter.trim()))));
+    } else {
+      _setData(jsonData.range.filter(i => methodFilterA(i, inputValue)));
+    }
   };
+  
 
   const renderItem = React.useCallback((rowIndex) => {
     const style = {
@@ -55,7 +74,7 @@ function App() {
           />
         )}
       </div>
-      <input type='text' value={filterA} maxLength={5} minLength={0} placeholder='Type number' onChange={handleInputChange}/>
+      <input type='text' value={filterA} maxLength={30} minLength={0} placeholder='Type number' onChange={handleInputChange}/>
     </div>
   );
 }
